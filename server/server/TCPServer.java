@@ -73,9 +73,10 @@ public class TCPServer {
 		try {
 
 			System.out.println("[Server Socket] Listening on port " + LISTENING_PORT);
-			
+			int n = 0;
 			while (true) {
 				connectionSocket = serverSocket.accept();
+				System.out.println("Connected client " + (++n));
 				this.threadPoolExecutor.execute(new ThreadServer(connectionSocket, directory));
 			}
 			

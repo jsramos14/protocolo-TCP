@@ -5,9 +5,6 @@ import java.net.*;
 
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Properties;
-import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class TCPClient 
@@ -38,35 +35,18 @@ public class TCPClient
     
     private InputStream inFromServer;
     
-    private Scanner scanner;
     
     public TCPClient() 
     {
     	inicializarConexion(); 
-    	this.scanner = new Scanner(System.in);
 	}
-    @SuppressWarnings("unused")
-	private void start() throws IOException {
-        String input;
-        while (true) {
-            input = scanner.nextLine();
-            PrintWriter out = new PrintWriter(this.canal.getOutputStream(), true);
-            out.println(input);
-            out.flush();
-        }
-    }
+
     
     public void inicializarConexion( )
     {
     	try {
-    		 String archivoPropiedades = "./data/clientFiles/client.properties";
-    		 FileInputStream fis = new FileInputStream( archivoPropiedades );
-    	     Properties config = new Properties( );
-    	     config.load( fis );
-    	     fis.close( );
-    	     
-    	     
-			 canal = new Socket( config.getProperty( "servidor.dirIp" ) , Integer.parseInt(config.getProperty( "servidor.puerto" )) );
+
+			 canal = new Socket( "157.253.205.64" , 3210);
 			 out = new PrintWriter( canal.getOutputStream( ), true );
 	         in = new BufferedReader( new InputStreamReader( canal.getInputStream( ) ) );
 	         inFromServer = canal.getInputStream();
@@ -178,6 +158,7 @@ public class TCPClient
     	int option = -1;
     	try {
     		TCPClient client = new TCPClient();
+    		client.inicializarConexion();
     		ArrayList<String> archivos = new ArrayList<String>();
     		while (option != 0) {
     			try {
